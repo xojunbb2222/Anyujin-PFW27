@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>An Yujin × Lacoste SS27 Copy Generator</title>
+<style>
+:root{--bg:#171b2b;--panel:#101522;--text:#fff;--muted:#aeb7cc;--accent:#4d99c7;--accent2:#6db6e4;--accent3:#b3e2ff}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{max-width:760px;margin:0 auto;padding:30px 42px 46px}.hero{text-align:center;margin-bottom:28px}h1{margin:0;font-size:22px;letter-spacing:.09em;font-weight:800;color:#9fd8ff;text-transform:uppercase}.subtitle{margin-top:8px;color:#d7dceb;font-size:12px;letter-spacing:.09em;text-transform:uppercase}
+.output-wrap{position:relative;margin-top:32px}.badge{position:absolute;top:-12px;left:18px;z-index:2;background:var(--accent);color:#fff;border-radius:999px;padding:7px 16px;font-size:12px;font-weight:800}.output{min-height:178px;border:1.5px solid #77bce7;border-radius:10px;background:var(--panel);padding:54px 32px 30px;display:flex;align-items:center;justify-content:flex-start;text-align:left;white-space:pre-wrap;font-size:15px;line-height:1.55;color:#fff}.copy-btn{position:absolute;top:14px;right:14px;z-index:2;border:0;background:var(--accent2);color:#fff;border-radius:999px;padding:9px 16px;cursor:pointer;font-weight:800;font-size:12px}.random-title{text-align:center;font-size:12px;font-weight:800;margin:25px 0 12px;letter-spacing:.03em;color:#fff}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.gen{border:1.5px solid var(--accent3);border-radius:7px;padding:12px 14px;cursor:pointer;font-weight:800;font-size:14px;min-height:42px;color:#fff;background:var(--accent);transition:.15s ease}.gen:hover{transform:translateY(-1px);filter:brightness(1.07)}.gen.active{background:#57aee2;box-shadow:0 0 0 2px rgba(159,216,255,.18)}.note{margin-top:15px;text-align:center;font-size:11px;line-height:1.5;color:var(--muted)}.footer{text-align:center;color:#768198;font-size:10px;margin-top:18px}.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(10px);opacity:0;background:#fff;color:#111;padding:9px 14px;border-radius:999px;font-size:12px;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:620px){.wrap{padding:24px 18px 38px}.grid{grid-template-columns:1fr}.output{min-height:190px;padding:56px 22px 26px;font-size:14px}h1{font-size:18px}.copy-btn{top:13px;right:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero"><h1>✨ LACOSTE S/S 2027 ✨</h1><div class="subtitle">An Yujin × Lacoste · Paris Fashion Week</div></div>
+  <div class="output-wrap"><div class="badge" id="modeLabel">Yujin Comments</div><button class="copy-btn" id="copyBtn">📄 Copy</button><div class="output" id="output"></div></div>
+  <div class="random-title">CLICK TO RANDOM</div>
+  <div class="grid"><button class="gen active" data-type="comments">Yujin Comments</button><button class="gen" data-type="captions">Yujin Captions</button></div>
+  <div class="note">Comments are generated without hashtags. Captions automatically include the Lacoste event tags.</div>
+  <div class="footer">Fan-made random copy generator</div>
+</div>
+<div class="toast" id="toast">Copied!</div>
+<script>
+const content={
+comments:[
+"Yujin looks so confident and fresh — Lacoste matches her sporty chic energy perfectly.",
+"An Yujin brings such a cool, effortless presence to this Lacoste look.",
+"Lacoste and Yujin are such a strong match. She makes the styling feel young and dynamic.",
+"Yujin's confidence makes every shot feel alive. She looks incredible.",
+"This sporty yet polished concept suits An Yujin so well.",
+"Her expressions are so natural and charismatic. Yujin really owns this look.",
+"An Yujin has the perfect balance of elegance, energy and confidence.",
+"She makes Lacoste feel fresh, modern and full of personality.",
+"Yujin's presence is so strong without ever looking forced.",
+"This styling brings out Yujin's cool and energetic side perfectly.",
+"Thank you Lacoste for inviting An Yujin. She fits the brand's energy so well.",
+"Yujin makes sporty fashion look incredibly chic and effortless.",
+"Her bright confidence is exactly what makes this appearance stand out.",
+"An Yujin at Paris Fashion Week is the moment. She looks amazing.",
+"Lacoste really found the perfect ambassador for this fresh, confident mood."
+],
+captions:[
+"Thank you Lacoste for inviting An Yujin to Paris Fashion Week. Her confident and energetic image fits the brand's sporty elegance so naturally.",
+"An Yujin brings such a fresh and dynamic energy to Lacoste. Sporty, polished and effortlessly cool all at once.",
+"Yujin's strongest fashion moments always feel natural, and this Lacoste look is a perfect example — confident, clean and full of personality.",
+"Lacoste and An Yujin are a great match. Her bright charisma gives the styling an energetic and modern edge.",
+"Yujin makes every frame feel alive. Her confidence, expressions and effortless presence make this Paris Fashion Week appearance so memorable.",
+"A perfect mix of sporty chic and star power. An Yujin brings her own energy to Lacoste in the best way.",
+"From her posture to her expressions, Yujin gives this Lacoste look so much character. She looks confident and completely at ease.",
+"An Yujin continues to show how versatile her fashion presence can be. This fresh Lacoste styling suits her perfectly.",
+"Paris Fashion Week with An Yujin and Lacoste feels energetic, modern and effortlessly stylish.",
+"Thank you Lacoste for giving us another beautiful An Yujin fashion moment. She makes the whole look feel instantly memorable."
+]};
+const tags="#ANYUJIN #LACOSTE\n#LacosteSS27 #PFW";
+let type="comments", last=-1; const output=document.getElementById('output'), modeLabel=document.getElementById('modeLabel');
+function randomize(){const arr=content[type];let i=Math.floor(Math.random()*arr.length);if(arr.length>1&&i===last)i=(i+1)%arr.length;last=i;output.textContent=type==='comments'?arr[i]:arr[i]+'\n\n'+tags;modeLabel.textContent=type==='comments'?'Yujin Comments':'Yujin Captions';}
+document.querySelectorAll('.gen').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.gen').forEach(x=>x.classList.remove('active'));btn.classList.add('active');type=btn.dataset.type;last=-1;randomize();}));
+document.getElementById('copyBtn').addEventListener('click',async()=>{const text=output.textContent;try{await navigator.clipboard.writeText(text)}catch(e){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}const toast=document.getElementById('toast');toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1000)});
+randomize();
+</script>
+</body></html>
