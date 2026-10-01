@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>An Yujin × Lacoste SS27 Copy Generator</title>
+<style>
+:root{
+  --bg:#171b2b;--panel:#101522;--text:#fff;--muted:#aeb7cc;
+  --accent:#4d99c7;--accent2:#6db6e4;--accent3:#b3e2ff;--line:#2a3550
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{max-width:760px;margin:0 auto;padding:30px 42px 46px}
+.hero{text-align:center;margin-bottom:28px}
+h1{margin:0;font-size:22px;letter-spacing:.09em;font-weight:800;color:#9fd8ff;text-transform:uppercase}
+.subtitle{margin-top:8px;color:#d7dceb;font-size:12px;letter-spacing:.09em;text-transform:uppercase}
+.output-wrap{position:relative;margin-top:32px}
+.badge{position:absolute;top:-12px;left:18px;z-index:2;background:var(--accent);color:#fff;border-radius:999px;padding:7px 16px;font-size:12px;font-weight:800}
+.output{min-height:178px;border:1.5px solid #77bce7;border-radius:10px;background:var(--panel);padding:54px 32px 30px;display:flex;align-items:center;justify-content:flex-start;text-align:left;white-space:pre-wrap;font-size:15px;line-height:1.55;color:#fff}
+.copy-btn{position:absolute;top:14px;right:14px;z-index:2;border:0;background:var(--accent2);color:#fff;border-radius:999px;padding:9px 16px;cursor:pointer;font-weight:800;font-size:12px}
+.random-title{text-align:center;font-size:12px;font-weight:800;margin:25px 0 12px;letter-spacing:.03em;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.gen{border:1.5px solid var(--accent3);border-radius:7px;padding:12px 14px;cursor:pointer;font-weight:800;font-size:14px;min-height:42px;color:#fff;background:var(--accent);transition:.15s ease}
+.gen:hover{transform:translateY(-1px);filter:brightness(1.07)}
+.gen.active{background:#57aee2;box-shadow:0 0 0 2px rgba(159,216,255,.18)}
+.note{margin-top:15px;text-align:center;font-size:11px;line-height:1.55;color:var(--muted)}
+.story-card{position:relative;margin-top:26px;border:1.5px solid var(--accent3);border-radius:10px;background:#101522;padding:42px 24px 22px}
+.story-label{position:absolute;top:-12px;left:18px;background:var(--accent);color:#fff;border-radius:999px;padding:7px 16px;font-size:12px;font-weight:800}
+.story-copy{position:absolute;top:12px;right:12px;border:0;background:var(--accent2);color:#fff;border-radius:999px;padding:8px 14px;cursor:pointer;font-weight:800;font-size:12px}
+.story-text{white-space:pre-wrap;font-size:15px;line-height:1.6;color:#fff}
+.footer{text-align:center;color:#768198;font-size:10px;margin-top:18px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(10px);opacity:0;background:#fff;color:#111;padding:9px 14px;border-radius:999px;font-size:12px;transition:.2s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:620px){
+  .wrap{padding:24px 18px 38px}.grid{grid-template-columns:1fr}
+  .output{min-height:190px;padding:56px 22px 26px;font-size:14px}
+  h1{font-size:18px}.copy-btn{top:13px;right:12px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1>✨ LACOSTE S/S 2027 ✨</h1>
+    <div class="subtitle">An Yujin × Lacoste · Paris Fashion Week</div>
+  </div>
+
+  <div class="output-wrap">
+    <div class="badge" id="modeLabel">Yujin Comments</div>
+    <button class="copy-btn" id="copyBtn">📄 Copy</button>
+    <div class="output" id="output"></div>
+  </div>
+
+  <div class="random-title">CLICK TO RANDOM</div>
+  <div class="grid">
+    <button class="gen active" data-type="comments">Yujin Comments</button>
+    <button class="gen" data-type="captions">Yujin Captions</button>
+  </div>
+
+  <div class="note">
+    More varied fan-style wording with recent-output similarity checks.
+    Comments stay hashtag-free; captions include the Lacoste event tags.
+  </div>
+
+  <div class="story-card">
+    <div class="story-label">IG STORY REPOST</div>
+    <button class="story-copy" id="storyCopyBtn">📄 Copy</button>
+    <div class="story-text" id="storyText">#ANYUJIN #LACOSTE
+#LacosteSS27 #PFW
+@_yujin_an @Lacoste</div>
+  </div>
+
+  <div class="footer">Fan-made random copy generator</div>
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+const tags = "#ANYUJIN #LACOSTE\n#LacosteSS27 #PFW @Lacoste";
+const comments = [
+"Yujin brings such bright confidence to Lacoste, and the clean sporty styling feels fresh, polished, and completely natural.",
+"Yujin makes Lacoste look effortlessly cool here, with a confident energy that keeps the whole styling fresh and memorable.",
+"Lacoste suits Yujin so naturally, and this clean Paris look feels sporty, polished, modern, and full of personality.",
+"Yujin gives Lacoste such fresh energy, and every detail in this look feels simple, confident, and perfectly balanced.",
+"Yujin and Lacoste really make sense together, especially when the styling feels this relaxed, sharp, and easy to wear.",
+"Yujin makes this Lacoste look feel expensive without overdoing anything, and the confident sporty mood works perfectly here.",
+"Lacoste brings out such a cool side of Yujin, and the whole look feels clean, youthful, and fashion-forward.",
+"Yujin looks completely at home in Lacoste, and this sporty Paris styling feels natural, confident, and very current.",
+"Yujin gives this Lacoste moment so much personality, while the clean styling keeps everything polished and easy.",
+"Lacoste and Yujin have such easy chemistry, and this look proves how naturally sporty elegance fits Yujin.",
+"Yujin makes Lacoste styling look so effortless, and the relaxed confidence gives every photo a strong fashion feeling.",
+"Yujin brings the perfect amount of attitude to Lacoste, making this simple look feel fresh, sharp, and memorable.",
+"Lacoste fits Yujin perfectly here, and the mix of sporty energy and polished styling feels especially strong.",
+"Yujin makes this Lacoste outfit feel alive, and the confident Paris energy makes every frame more interesting.",
+"Yujin and Lacoste are such a natural match, with clean styling, strong confidence, and just enough playful energy.",
+"Lacoste looks incredibly fresh on Yujin, and the simple styling lets Yujin's confidence become the main focus.",
+"Yujin gives Lacoste a bright modern edge, and this whole look feels effortless without ever becoming too casual.",
+"Yujin makes this Lacoste moment feel relaxed and polished at once, which is exactly why the styling works.",
+"Lacoste really understands Yujin's strengths, and this clean sporty look gives Yujin plenty of room to shine.",
+"Yujin brings so much movement to Lacoste, and the styling looks even better once the photos start feeling candid.",
+"Yujin and Lacoste keep getting better together, and this Paris look feels especially fresh, confident, and natural.",
+"Lacoste gives Yujin such a strong sporty frame, while Yujin brings the personality that makes the look memorable.",
+"Yujin makes Lacoste feel young and polished here, and the whole styling has such an easy fashion-week confidence.",
+"Yujin looks amazing in Lacoste, and the clean silhouette makes the confident Paris mood feel even stronger.",
+"Lacoste and Yujin work so well because the sporty mood already feels completely natural on Yujin.",
+"Yujin gives this Lacoste styling exactly the right balance of confidence, movement, polish, and effortless cool.",
+"Yujin makes Lacoste look incredibly current here, and the styling feels simple without ever looking plain.",
+"Lacoste suits Yujin's confident energy perfectly, and this look feels like one of Yujin's strongest Paris moments.",
+"Yujin brings such an easy fashion presence to Lacoste, and the sporty styling never feels forced or overdone.",
+"Yujin and Lacoste just click here, with a clean look that feels modern, confident, and genuinely fun.",
+"How does Yujin make Lacoste styling look this effortless while keeping every photo fresh, confident, and full of personality?",
+"Can Lacoste please release more Yujin photos, because this clean sporty look gets better with every new frame?",
+"Why does Yujin make Lacoste look so natural when the styling is this simple, polished, and sporty?",
+"Yujin in Lacoste is such a good Paris combination, and this confident sporty look deserves every angle possible.",
+"Every new Yujin photo makes this Lacoste look better, and the relaxed styling feels more natural each time.",
+"Yujin really understands this Lacoste mood, and the clean sporty energy makes the entire look feel completely effortless.",
+"Lacoste gave Yujin a simple look, and Yujin turned that simplicity into a full fashion-week moment.",
+"Yujin brings such natural confidence to Lacoste that even the smallest styling details feel more intentional.",
+"This Lacoste look feels made for Yujin, with sporty polish, easy confidence, and a genuinely fresh Paris mood.",
+"Yujin makes Lacoste feel playful and polished together, which gives this whole fashion-week moment much more personality."
+];
+const captions = [
+"Yujin and Lacoste feel like such a natural match here, with clean sporty styling and confident Paris energy.",
+"Lacoste gives Yujin the perfect balance of sporty and polished, and Yujin makes the whole look feel effortless.",
+"Yujin brings fresh confidence to Lacoste, turning a clean sporty look into a memorable Paris Fashion Week moment.",
+"Yujin makes Lacoste feel modern and easy here, while the simple styling keeps the focus on Yujin's presence.",
+"Lacoste suits Yujin's energy so well, and this look feels polished without losing the relaxed sporty mood.",
+"Yujin and Lacoste keep proving how natural this pairing feels, especially with styling this clean and confident.",
+"Yujin gives Lacoste such a fresh fashion-week energy, and the entire look feels simple, sharp, and memorable.",
+"Lacoste brings out a cool confident side of Yujin, while Yujin keeps the sporty styling feeling completely natural.",
+"Yujin makes this Lacoste look feel effortless, polished, and full of personality without needing anything overly complicated.",
+"Yujin and Lacoste work beautifully together here, with sporty confidence, clean lines, and an easy Paris mood.",
+"Lacoste looks especially strong on Yujin when the styling stays simple and lets Yujin's natural confidence lead.",
+"Yujin gives this Lacoste moment the perfect mix of movement, confidence, clean styling, and fashion-week polish.",
+"Yujin makes Lacoste styling feel fresh rather than formal, which gives this Paris look so much personality.",
+"Lacoste and Yujin feel completely aligned here, from the sporty styling to the relaxed confidence in every frame.",
+"Yujin brings exactly the kind of bright confidence that makes this Lacoste Paris moment feel fresh and memorable.",
+"Yujin turns clean Lacoste styling into a real fashion moment by adding movement, confidence, and personality.",
+"Lacoste gives Yujin a strong sporty foundation, and Yujin makes the whole look feel modern and effortless.",
+"Yujin and Lacoste have such an easy visual chemistry, and this Paris look shows exactly why the pairing works.",
+"Yujin makes this Lacoste outfit feel polished without becoming stiff, which is perfect for a Paris Fashion Week moment.",
+"Lacoste fits Yujin naturally, and Yujin's confident energy makes the simple styling feel much more memorable.",
+"Yujin gives Lacoste a youthful polished edge here, and the clean sporty styling feels completely natural.",
+"Yujin and Lacoste look especially strong together when the styling stays simple, confident, and focused on movement.",
+"Lacoste lets Yujin's personality lead the look, while Yujin gives the brand a fresh and energetic fashion-week mood.",
+"Yujin makes this Lacoste Paris look feel relaxed, modern, sporty, and polished all at the same time.",
+"Yujin brings so much natural confidence to Lacoste that the clean styling never needs anything extra to stand out.",
+"Lacoste and Yujin keep creating moments that feel easy, current, and genuinely suited to Yujin's fashion image.",
+"Yujin gives this Lacoste look a strong sense of movement, making the sporty styling feel even more alive.",
+"Yujin and Lacoste are such a convincing match here, with confidence, clean styling, and effortless Paris energy.",
+"Lacoste feels especially fresh on Yujin, and Yujin makes every simple detail look intentional and fashion-forward.",
+"Yujin makes this Lacoste moment memorable through confidence and movement, while the styling stays clean and understated."
+];
+
+const recent = {comments:[], captions:[]};
+
+function normalize(s){
+  return String(s||"").toLowerCase().replace(/[^a-z0-9\\s]/g," ").replace(/\\s+/g," ").trim();
+}
+function bigrams(s){
+  const words=normalize(s).split(" ").filter(Boolean);
+  const out=new Set();
+  for(let i=0;i<words.length-1;i++) out.add(words[i]+" "+words[i+1]);
+  return out;
+}
+function similarity(a,b){
+  const A=bigrams(a),B=bigrams(b);
+  if(!A.size||!B.size)return 0;
+  let overlap=0;A.forEach(x=>{if(B.has(x))overlap++;});
+  return overlap/(A.size+B.size-overlap);
+}
+function historyKey(type){return "anyujin_short_v3_"+type;}
+function getStored(type){
+  try{return JSON.parse(localStorage.getItem(historyKey(type))||"[]");}
+  catch(e){return [];}
+}
+function remember(type,text){
+  recent[type].push(text);
+  if(recent[type].length>30)recent[type].shift();
+  let stored=getStored(type);stored.push(text);
+  if(stored.length>180)stored=stored.slice(-140);
+  try{localStorage.setItem(historyKey(type),JSON.stringify(stored));}catch(e){}
+}
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function generate(type){
+  const bank=type==="comments"?comments:captions;
+  const stored=getStored(type);
+  let candidates=bank.filter(x=>!stored.includes(x));
+  if(!candidates.length){
+    try{localStorage.removeItem(historyKey(type));}catch(e){}
+    candidates=[...bank];
+  }
+  let safe=candidates.filter(x=>!recent[type].some(y=>similarity(x,y)>.52));
+  if(!safe.length)safe=candidates;
+  const text=pick(safe);remember(type,text);return text;
+}
+
+let type="comments";
+const output=document.getElementById("output");
+const modeLabel=document.getElementById("modeLabel");
+function randomize(){
+  const raw=generate(type);
+  output.textContent=type==="comments"?raw:raw+"\n\n"+tags;
+  modeLabel.textContent=type==="comments"?"Yujin Comments":"Yujin Captions";
+}
+document.querySelectorAll(".gen").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll(".gen").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");type=btn.dataset.type;randomize();
+}));
+async function copyText(text){
+  try{await navigator.clipboard.writeText(text);}
+  catch(e){const t=document.createElement("textarea");t.value=text;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove();}
+  const toast=document.getElementById("toast");toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),1000);
+}
+document.getElementById("copyBtn").addEventListener("click",()=>copyText(output.textContent));
+document.getElementById("storyCopyBtn").addEventListener("click",()=>copyText(document.getElementById("storyText").textContent));
+randomize();
+</script>
+</body>
+</html>
