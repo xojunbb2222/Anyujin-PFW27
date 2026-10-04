@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>An Yujin × Lacoste SS27 Copy Generator</title>
+<style>
+:root{
+  --bg:#171b2b;--panel:#101522;--text:#fff;--muted:#aeb7cc;
+  --accent:#4d99c7;--accent2:#6db6e4;--accent3:#b3e2ff;--line:#2a3550
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{max-width:760px;margin:0 auto;padding:30px 42px 46px}
+.hero{text-align:center;margin-bottom:28px}
+h1{margin:0;font-size:22px;letter-spacing:.09em;font-weight:800;color:#9fd8ff;text-transform:uppercase}
+.subtitle{margin-top:8px;color:#d7dceb;font-size:12px;letter-spacing:.09em;text-transform:uppercase}
+.output-wrap{position:relative;margin-top:32px}
+.badge{position:absolute;top:-12px;left:18px;z-index:2;background:var(--accent);color:#fff;border-radius:999px;padding:7px 16px;font-size:12px;font-weight:800}
+.output{min-height:178px;border:1.5px solid #77bce7;border-radius:10px;background:var(--panel);padding:54px 32px 30px;display:flex;align-items:center;justify-content:flex-start;text-align:left;white-space:pre-wrap;font-size:15px;line-height:1.55;color:#fff}
+.copy-btn{position:absolute;top:14px;right:14px;z-index:2;border:0;background:var(--accent2);color:#fff;border-radius:999px;padding:9px 16px;cursor:pointer;font-weight:800;font-size:12px}
+.random-title{text-align:center;font-size:12px;font-weight:800;margin:25px 0 12px;letter-spacing:.03em;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.gen{border:1.5px solid var(--accent3);border-radius:7px;padding:12px 14px;cursor:pointer;font-weight:800;font-size:14px;min-height:42px;color:#fff;background:var(--accent);transition:.15s ease}
+.gen:hover{transform:translateY(-1px);filter:brightness(1.07)}
+.gen.active{background:#57aee2;box-shadow:0 0 0 2px rgba(159,216,255,.18)}
+.note{margin-top:15px;text-align:center;font-size:11px;line-height:1.55;color:var(--muted)}
+.story-card{position:relative;margin-top:26px;border:1.5px solid var(--accent3);border-radius:10px;background:#101522;padding:42px 24px 22px}
+.story-label{position:absolute;top:-12px;left:18px;background:var(--accent);color:#fff;border-radius:999px;padding:7px 16px;font-size:12px;font-weight:800}
+.story-copy{position:absolute;top:12px;right:12px;border:0;background:var(--accent2);color:#fff;border-radius:999px;padding:8px 14px;cursor:pointer;font-weight:800;font-size:12px}
+.story-text{white-space:pre-wrap;font-size:15px;line-height:1.6;color:#fff}
+.footer{text-align:center;color:#768198;font-size:10px;margin-top:18px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(10px);opacity:0;background:#fff;color:#111;padding:9px 14px;border-radius:999px;font-size:12px;transition:.2s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:620px){
+  .wrap{padding:24px 18px 38px}.grid{grid-template-columns:1fr}
+  .output{min-height:190px;padding:56px 22px 26px;font-size:14px}
+  h1{font-size:18px}.copy-btn{top:13px;right:12px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1>✨ LACOSTE S/S 2027 ✨</h1>
+    <div class="subtitle">An Yujin × Lacoste · Paris Fashion Week</div>
+  </div>
+
+  <div class="output-wrap">
+    <div class="badge" id="modeLabel">Yujin Comments</div>
+    <button class="copy-btn" id="copyBtn">📄 Copy</button>
+    <div class="output" id="output"></div>
+  </div>
+
+  <div class="random-title">CLICK TO RANDOM</div>
+  <div class="grid">
+    <button class="gen active" data-type="comments">Yujin Comments</button>
+    <button class="gen" data-type="captions">Yujin Captions</button>
+  </div>
+
+  <div class="note">Fan-style generator: 30 conversation directions + 20 sentence structures, with occasional emoji and recent-line similarity filtering.</div>
+
+  <div class="story-card">
+    <div class="story-label">IG STORY REPOST</div>
+    <button class="story-copy" id="storyCopyBtn">📄 Copy</button>
+    <div class="story-text" id="storyText">#ANYUJIN #LACOSTE
+#LacosteSS27 #PFW
+@_yujin_an @Lacoste</div>
+  </div>
+
+  <div class="footer">Fan-made random copy generator</div>
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+const tags = "YUJIN AT LACOSTE PFW\n#YUJINxLacosteSS27\n#ANYUJIN #LacosteSS27";
+const topics = {"timeline":{"subjects":["Yujin x Lacoste","Yujin at Lacoste","Yujin in Lacoste"],"hooks":["okay but","wait","guys","not me","be serious","at this point","ngl"],"thoughts":["is fully taking over my timeline today","keeps giving me another photo to save","has me refreshing for one more update","is making it impossible to log off","keeps showing up with a completely new mood","is turning every refresh into another favorite"],"extras":["every account has a different angle","the photos just keep getting better","I keep thinking the last one was my favorite","there is always one more frame to save","the feed refuses to calm down","I am clearly not done looking"],"closers":["who else is still here","please tell me I am not alone","I am not moving on yet","this is not helping my screen time","one post was never going to be enough","I need the next update already"]},"favorite_photo":{"subjects":["Yujin in Lacoste","Yujin x Lacoste","Lacoste with Yujin"],"hooks":["okay so","I swear","not again","why is","someone explain why","I really thought","honestly"],"thoughts":["keeps changing my favorite photo every five minutes","has completely ruined my photo ranking today","keeps adding another impossible choice","makes picking one favorite feel pointless","has me saving the same look from every angle","keeps winning with the most random little moments"],"extras":["the expressions are never exactly the same","every camera catches something different","the candid shots keep sneaking up on me","one tiny expression changes the whole frame","the newest photo always feels slightly different","the side angles keep changing everything"],"closers":["which one are we choosing","I give up picking","my favorites folder is suffering","there is no final answer today","someone choose for me","I need a group vote"]},"direct_to_brand":{"subjects":["Yujin and Lacoste","Yujin x Lacoste","Lacoste with Yujin"],"hooks":["Lacoste please","Lacoste pls","okay Lacoste","Lacoste be serious","one thing Lacoste","Lacoste I am asking nicely"],"thoughts":["keep the Yujin photos coming today","post every Yujin angle you have","do not hide the Yujin clips from us","give us the full Yujin photo set","keep this Yujin content going","please release the rest of the Yujin folder"],"extras":["fans are clearly saving everything","every post has a different mood","the candid shots are way too good","one update is simply not enough","the timeline is already fully invested","the pairing keeps getting better on camera"],"closers":["we can handle it","nobody is complaining","today is the day to overshare","consider this our official request","the demand is right here","we are ready"]},"fan_to_fan":{"subjects":["Yujin x Lacoste","Yujin in Lacoste","Yujin at Lacoste"],"hooks":["guys","okay everyone","real question","tell me why","am I the only one who thinks","who else thinks","please tell me"],"thoughts":["looks better every time a new photo drops","works even more in the candid shots","feels way more natural than I expected","is one of the best parts of my feed today","gets more fun once the videos start appearing","has way more range than one look should have"],"extras":["the expressions keep changing","the styling never feels too serious","the photos all have different energy","the little reactions make it feel personal","the movement helps the outfit so much","the whole thing feels less staged"],"closers":["what is everyone saving first","which photo is winning for you","are we all seeing the same thing","I need opinions immediately","please say I am not alone","someone talk to me about this"]},"arrival":{"subjects":["Yujin at Lacoste","Yujin x Lacoste","Lacoste with Yujin"],"hooks":["the day barely started and","not even five minutes in and","okay arrival Yujin","the entrance alone and","before anything else","first look at"],"thoughts":["already has everyone watching","already feels like a whole moment","is giving us way too much too early","made the wait completely worth it","set the mood immediately","has me checking for the next angle"],"extras":["the energy feels relaxed instead of staged","every camera is catching something different","the first photos already have personality","Yujin looks completely in the moment","Lacoste keeps the whole thing clean","the candid frames are doing a lot"],"closers":["we are starting strong","today is going to be long","I need the next update","I am staying right here","this was a very good start","the timeline is awake now"]},"front_row":{"subjects":["Yujin at Lacoste","Yujin x Lacoste","Lacoste and Yujin"],"hooks":["front row Yujin and","once the cameras settle","the seated shots and","I love how","somehow even sitting there","the quiet moments make"],"thoughts":["still feels interesting without doing too much","keeps giving us little reactions to watch","looks good even between the big moments","still has so much personality","feels more natural than the posed photos","makes the whole look feel more personal"],"extras":["Yujin changes expression constantly","the candid shots feel less formal","Lacoste never crowds the frame","the styling gives Yujin room to react","the little smiles keep changing the mood","every angle feels slightly different"],"closers":["the candid shots might win","I want every single angle","these are the photos I keep reopening","I need more front row clips","the quiet moments are my favorite","this is where the pairing really works"]},"sporty":{"subjects":["Yujin in Lacoste","Yujin x Lacoste","Lacoste on Yujin"],"hooks":["this sporty side of","what I like about","for me","somehow","this is exactly why","the fun part about"],"thoughts":["feels way more natural than a super dressed-up look","makes the whole fashion-week mood feel lighter","looks active without feeling too casual","works because Yujin already carries this energy","makes movement part of the look","keeps the styling from feeling too serious"],"extras":["the walking shots make everything better","Lacoste already has that athletic mood","Yujin looks comfortable instead of restricted","the look makes more sense in motion","nothing about the sporty angle feels forced","the clothes actually move with Yujin"],"closers":["this direction really suits Yujin","I want more of this","this lane makes so much sense","the concept is working on me","I get the vision","please keep this energy"]},"simple_look":{"subjects":["Yujin in Lacoste","Yujin x Lacoste","Lacoste on Yujin"],"hooks":["the best part is","I really like how","for once","maybe it is just me but","honestly","one thing about"],"thoughts":["proves the look does not need extra fuss","makes simple styling feel way less boring","looks better because nobody added too much","keeps the whole outfit easy to read","lets Yujin do most of the work","shows why clean styling can be enough"],"extras":["nothing is fighting for attention","the details stay simple","the outfit gives Yujin room to move","the look never feels costume-like","the whole frame has more breathing room","Yujin already gives it enough personality"],"closers":["I would not add anything else","this is exactly enough","the simplicity is doing a lot","I like this direction","less really works here","the restraint makes it better"]},"expressions":{"subjects":["Yujin at Lacoste","Yujin x Lacoste","Lacoste with Yujin"],"hooks":["one smile and","the expressions alone make","every time Yujin looks at the camera","the funny part is","I keep losing track because","one tiny reaction and"],"thoughts":["feels like a completely different photo","changes the mood right away","gets way more personal","stops everything from feeling too serious","becomes much more memorable","feels less like a standard fashion-week post"],"extras":["Yujin never gives the exact same face twice","the little reactions feel so natural","Lacoste stays in the background when it should","the candid moments are easy to remember","the mood can switch in one second","Yujin keeps the whole thing from feeling posed"],"closers":["I keep saving the reaction shots","those little moments are my favorite","this is why I need every photo","the expressions are doing half the work","one frame is never enough","the candid photos keep winning"]},"video":{"subjects":["Yujin in Lacoste","Yujin x Lacoste","Lacoste with Yujin"],"hooks":["the video really proves","I keep replaying because","the clips make","one watch was not enough because","the more I replay it","the moving shots make"],"thoughts":["look even better than the still photos","feel so much more natural","show details I missed at first","make the whole look easier to understand","give the styling way more personality","change which moment I like most"],"extras":["Yujin moves so naturally","the little expressions keep changing","Lacoste looks better once the outfit moves","the camera catches random little reactions","the pacing makes it feel less staged","movement gives the look more context"],"closers":["I am replaying it again","the clip wins for me","this is going straight to bookmarks","one replay was never enough","the video changed my ranking","I need the full version"]},"media":{"subjects":["Yujin x Lacoste","Yujin at Lacoste","Lacoste with Yujin"],"hooks":["every account I open has","my feed is basically","the fun part today is","I keep seeing","at this rate","every refresh gives me"],"thoughts":["another angle I had not seen yet","one more photo worth saving","a completely new little moment","another reason to stay online","a different side of the same look","more content than I can process"],"extras":["everyone seems to catch something different","new clips keep changing the favorite","the posts are arriving from everywhere","the angles keep changing","each account has a different moment","the timeline refuses to calm down"],"closers":["I am not complaining","the feed can stay like this","today is clearly not over","I need the next media drop","my saved folder is full","I am definitely not logging off"]},"paris":{"subjects":["Yujin and Lacoste","Yujin x Lacoste","Yujin in Lacoste"],"hooks":["in Paris","for PFW","something about Paris makes","today in Paris","maybe it is the city but","Paris really makes"],"thoughts":["feel even more right together","hit a little differently","look made for this exact setting","feel more fun than formal","make the whole moment feel bigger","work without turning too serious"],"extras":["the city adds just enough drama","the mood still stays relaxed","the sporty side stands out more","the photos feel connected to the whole day","fashion week makes the contrast more interesting","the backdrop gives everything more context"],"closers":["the location really helps","this feels like a real Paris chapter","the timing could not be better","I want to see the full schedule","the city fits the pairing","PFW suits this energy"]},"brand_fit":{"subjects":["Yujin and Lacoste","Yujin x Lacoste","Lacoste with Yujin"],"hooks":["the more I see it","at this point","for me","somehow","I keep coming back to how","honestly"],"thoughts":["makes more sense every time","feels way more natural than expected","already feels like a real partnership","looks convincing without trying too hard","works because neither side disappears","gets stronger with every new post"],"extras":["Yujin still feels completely like Yujin","Lacoste keeps its own identity","the sporty mood already fits","nothing about the pairing feels forced","the brand never overwhelms Yujin","both sides still feel recognizable"],"closers":["that is probably why it works","I can see this going further","the match feels obvious now","I get the vision more every time","this one really makes sense","the pairing keeps growing on me"]},"surprise":{"subjects":["Yujin x Lacoste","Yujin in Lacoste","Lacoste with Yujin"],"hooks":["I did not expect","somehow I underestimated","the surprise for me is","I was not prepared for","okay I admit","this caught me off guard because"],"thoughts":["to work this quickly","to feel this natural so soon","to become one of my favorite pairings","to have this much range","to look better with every update","to win me over this fast"],"extras":["the sporty side fits Yujin easily","the photos never feel too controlled","Lacoste leaves room for personality","the styling keeps changing mood","every update adds a new angle","the collaboration feels less obvious than expected"],"closers":["but here we are","I am fully convinced now","that changed quickly","I get it now","consider me won over","this surprised me in a good way"]},"fans_chat":{"subjects":["Yujin x Lacoste","Yujin in Lacoste","Yujin at Lacoste"],"hooks":["okay dives","guys please","everyone be honest","real talk","quick question","I need the group opinion"],"thoughts":["is giving us too many good photos at once","has one of the strongest moods today","keeps getting better the longer we watch","looks better in the random moments","has way more personality than I expected","is making this day way too fun"],"extras":["the candid shots are doing so much","the little expressions keep winning","every new angle feels different","the whole thing feels easy","the videos keep changing my mind","the simple styling really helps"],"closers":["what are we calling the best photo","which moment won for you","I need everyone to pick one","are we surviving this","please share your favorite","I need the timeline consensus"]},"show_day":{"subjects":["Yujin at Lacoste","Yujin x Lacoste","Lacoste with Yujin"],"hooks":["show day and","today really proved","the whole day made","after all these updates","by the end of today","this Lacoste day made"],"thoughts":["feel even more complete","look better than the first photos suggested","give us more than one standout moment","have way more variety than expected","feel like a full little story","become one of those days worth revisiting"],"extras":["the candid and posed photos balance each other","Yujin never stays in one mood for long","the strongest frames were not always the obvious ones","small moments ended up mattering too","the clips gave the photos more context","Lacoste content covered a lot of different angles"],"closers":["I am still finding favorites","this one has replay value","the recap is going to be long","I am definitely revisiting this","today gave us a lot","this was worth following"]},"future":{"subjects":["Yujin and Lacoste","Yujin x Lacoste","Lacoste with Yujin"],"hooks":["after today","if Lacoste keeps going","I can already imagine","this is making me want","one thing today proved","now I really want"],"thoughts":["a bigger campaign next","more Yujin content beyond fashion week","a completely different concept next time","more video with Yujin","a longer visual story together","another Lacoste moment with a new mood"],"extras":["Yujin has so much range on camera","the pairing works in candid and styled content","the sporty side can go in several directions","the image feels flexible without losing focus","fans respond to different kinds of posts","the partnership still has room to grow"],"closers":["I hope this is only the start","there is more to explore","I would watch that immediately","this partnership has plenty left","the next step feels obvious","I want to see what they do next"]},"walking_shots":{"subjects":["Yujin in Lacoste","Yujin x Lacoste","Lacoste on Yujin"],"hooks":["the walking shots and","every time Yujin starts moving","okay the walk alone","I keep replaying because","why do the moving shots make","one thing about"],"thoughts":["look ten times better","feel way more natural","make the outfit suddenly click","change the whole mood","give the look way more life","make the styling easier to understand"],"extras":["the clothes move so much better","Yujin looks completely comfortable","the camera catches little expressions too","Lacoste feels less formal in motion","the proportions make more sense","the whole frame feels less posed"],"closers":["I need more walking clips","video wins again","this angle is my favorite","I am replaying this one","the moving shots got me","please keep the clips coming"]},"smile":{"subjects":["Yujin at Lacoste","Yujin x Lacoste","Lacoste with Yujin"],"hooks":["one Yujin smile and","the smile really makes","okay that smile made","why does one smile make","I swear the smile makes","the second Yujin smiles"],"thoughts":["feel completely different","look so much warmer","stop feeling too serious","turn into my favorite frame","feel way more personal","look even better somehow"],"extras":["the whole mood changes instantly","the styling suddenly feels lighter","Lacoste fades into the perfect background","the candid feeling comes through","the photo feels less posed","Yujin brings the whole frame to life"],"closers":["I am saving that one","that frame wins for me","this is the photo","I need the original quality","someone send me the full size","I keep coming back to it"]},"eye_contact":{"subjects":["Yujin in Lacoste","Yujin x Lacoste","Lacoste with Yujin"],"hooks":["the eye contact and","one look at the camera and","why does Yujin looking straight at the camera make","okay that look made","I was fine until","the camera angle plus"],"thoughts":["feel way more intense","hit completely differently","turn into a whole moment","become impossible to scroll past","look so much stronger","change the energy instantly"],"extras":["the frame suddenly feels very direct","Yujin completely owns the shot","Lacoste keeps the styling simple enough","nothing distracts from the expression","the photo feels much more personal","the whole image gets sharper"],"closers":["I had to stop scrolling","that one got me","this frame is dangerous","I need a minute","saving immediately","there goes my favorite again"]},"bookmark":{"subjects":["Yujin x Lacoste","Yujin in Lacoste","Lacoste with Yujin"],"hooks":["straight to bookmarks because","I am bookmarking this because","another save for","my saved folder just got","I really did not need another","there goes another"],"thoughts":["one more Yujin photo today","another Lacoste frame I will revisit","a completely new favorite","another clip I am going to replay","one more reason to stay online","another photo I cannot ignore"],"extras":["the mood is different again","the angle changes everything","the expression is too good","the candid feeling makes it better","the look is simple but memorable","the whole frame feels easy"],"closers":["my storage is in danger","this is getting ridiculous","I blame Lacoste","I am not deleting anything","the folder keeps growing","today is not helping"]},"photo_quality":{"subjects":["Yujin in Lacoste","Yujin x Lacoste","Lacoste with Yujin"],"hooks":["I need the HD version because","please give us the original file because","the quality is not enough for","I am begging for HQ because","someone find the full resolution because","this photo deserves better because"],"thoughts":["looks too good to stay compressed","has way too many details to miss","needs to be seen properly","is clearly hiding tiny details","gets better the more I zoom in","deserves a full-size save"],"extras":["the small styling details matter","Yujin's expression is too good","Lacoste kept the frame really clean","the textures show up more in HQ","the close-up would change everything","I know there is more to see"],"closers":["I need the original now","please drop the HQ","my gallery is waiting","I am serious about this","someone save us","we deserve the full quality"]},"before_show":{"subjects":["Yujin at Lacoste","Yujin x Lacoste","Lacoste with Yujin"],"hooks":["before the show even starts","we are still waiting and","not even at the main moment yet and","this early and","before the lights go down","the buildup already has"],"thoughts":["everyone checking for updates","me way too invested","the timeline fully awake","fans already choosing favorites","the pairing getting more attention","me refreshing like this is my job"],"extras":["the first photos were already strong","Yujin looks completely ready","Lacoste content keeps appearing","the mood is already set","every little update adds something","the wait somehow feels fun"],"closers":["I am not ready for the rest","show time needs to hurry up","this buildup is working","I need the next post","today is going to be long","we are only getting started"]},"after_show":{"subjects":["Yujin at Lacoste","Yujin x Lacoste","Lacoste with Yujin"],"hooks":["now that the show is over","after seeing everything","looking back at today","okay post-show thoughts","once the rush settles","after all those updates"],"thoughts":["still has me going back through the photos","gave us way more moments than expected","holds up beyond the first reaction","has too many frames worth revisiting","ended up being one of my favorite parts","still feels fun to look through"],"extras":["the candid shots aged the best","Yujin gave so many different expressions","Lacoste posted enough angles to compare","the videos added a lot","the smaller moments became favorites","the day had more range than expected"],"closers":["I am still not done","the recap will take forever","I keep finding new favorites","today gave us a lot","I am revisiting everything","this was worth following"]},"group_chat":{"subjects":["Yujin x Lacoste","Yujin in Lacoste","Yujin at Lacoste"],"hooks":["group chat emergency","I need everyone here because","okay somebody answer me","quick vote","serious question for everyone","I need the fandom council because"],"thoughts":["has too many good frames today","keeps changing the best photo","looks better in every new angle","is giving us too much to rank","has way too many little moments","keeps making me change my mind"],"extras":["the candid shots are especially dangerous","the expressions keep switching","the clips are not helping either","Lacoste keeps dropping new material","Yujin is making the ranking impossible","every update adds another contender"],"closers":["pick one for me","what is the final answer","I need your favorite now","we need a poll","someone make the ranking","I refuse to choose alone"]},"reaction_meme":{"subjects":["Yujin x Lacoste","Yujin in Lacoste","Lacoste with Yujin"],"hooks":["me pretending I am normal about","me saying one photo is enough when","me trying to move on from","me acting surprised that","me opening X just to see","me five minutes after saying I am done with"],"thoughts":["shows up with another good frame","drops another photo on my timeline","somehow gets even better","gives me one more clip to replay","finds another way to ruin my ranking","makes me save another image"],"extras":["the cycle is never ending","Yujin keeps changing the mood","Lacoste clearly has more content","the new angle gets me every time","the candid shots keep winning","I have learned absolutely nothing"],"closers":["this is my life now","I accept defeat","see you at the next update","nothing has changed","I will be here all day","apparently I live here now"]},"fashion_friend":{"subjects":["Yujin in Lacoste","Yujin x Lacoste","Lacoste on Yujin"],"hooks":["okay fashion people","tell me if I am wrong but","the fashion part I actually like is","not to sound too serious but","I keep noticing how","one styling thing about"],"thoughts":["works because it never overdoes the idea","lets the sporty mood stay obvious","keeps the styling readable","uses simplicity in a smart way","gives the outfit room to move","does not bury Yujin under the clothes"],"extras":["the proportions stay easy on the eye","the look has one clear idea","Lacoste keeps the details focused","Yujin still carries the frame","the styling feels wearable","nothing competes too hard"],"closers":["that is why I like it","this is the direction for me","I would keep it exactly like this","the simplicity really works","I get why this photographs well","this feels very intentional"]},"content_request":{"subjects":["Yujin and Lacoste","Yujin x Lacoste","Lacoste with Yujin"],"hooks":["one tiny request","okay content team","if anyone from Lacoste is reading","I am asking for one thing","please hear me out","today would be perfect for"],"thoughts":["more Yujin behind-the-scenes clips","a longer Yujin video","the full Yujin photo set","more candid Yujin moments","one proper Yujin recap video","the unposted Yujin frames"],"extras":["fans are clearly watching everything","the little moments are the best part","the short clips are doing so well","there are obviously more angles","the candid content feels the most personal","the timeline would absolutely take it"],"closers":["please make it happen","I am asking respectfully","that is all I want today","we would appreciate it","consider this a fan request","I promise people will watch"]},"mood_switch":{"subjects":["Yujin x Lacoste","Yujin in Lacoste","Lacoste with Yujin"],"hooks":["the mood switch is wild because","one photo later and","I love how quickly","the next frame makes","somehow the same look makes","every new angle makes"],"thoughts":["feel like a completely different moment","change from playful to serious instantly","look like a new set all over again","shift the energy without changing the outfit","give us another side of Yujin","feel less repetitive than expected"],"extras":["the expressions do most of the work","the camera catches Yujin differently each time","Lacoste stays consistent in the background","the styling leaves room for personality","the pose changes the whole frame","the lighting and angle keep shifting"],"closers":["I love that range","this keeps the set interesting","I keep scrolling back","the variety is so good","this is why one photo is not enough","the whole set feels alive"]},"late_night":{"subjects":["Yujin x Lacoste","Yujin in Lacoste","Lacoste with Yujin"],"hooks":["I should be sleeping but","it is getting late and","why am I still here when","I said I was done for the day but","one last scroll and","my bedtime lost because"],"thoughts":["keeps giving me another photo","still has me checking updates","somehow found another favorite","made me reopen the whole set","gave me one more clip to replay","keeps appearing on my feed"],"extras":["the timeline never really stopped","the new angle was worth it","Lacoste content keeps arriving","Yujin keeps changing the ranking","there is always one more post","I clearly have no self-control"],"closers":["okay maybe one more refresh","I am blaming this tomorrow","sleep can wait apparently","this is my final post maybe","I know I am not leaving","see you at the next update"]}};
+const templates = ["{h} {s} {t}; {e}, and {c}.", "{h} {s} {t}. {c}, especially because {e}.", "{h} can we talk about how {s} {t}? {e}, so {c}.", "{h} {c} because {s} {t}, and {e}.", "{h} {e}; that is why {s} {t}. {c}.", "{h} {s} {t}, which makes sense when {e}. {c}.", "{h} I keep thinking about how {s} {t}; {e}, and {c}.", "{h} why does {s} {t}? {e}, and now {c}.", "{h} {s} {t} — {e}. {c}.", "{h} not going to lie, {s} {t}; {e}, so {c}.", "{h} I thought I was done, but {s} {t}. {e}, so {c}.", "{h} maybe this is dramatic, but {s} {t}; {e}. {c}.", "{h} {s} {t}? honestly, {e}, and {c}.", "{h} the thing is, {s} {t}. {e}. {c}.", "{h} I did not expect this, but {s} {t}; {e}, so {c}.", "{h} at this point, {s} {t}. {c}, because {e}.", "{h} I need someone to explain why {s} {t}; {e}. {c}.", "{h} tell me why {s} {t}. {e}, and {c}.", "{h} okay, {s} {t}. {e}. {c}.", "{h} if we are being serious, {s} {t}; {e}, and {c}."];
+const emojis = ["😭", "🥹", "🫶", "😭😭", "🥹🫶", "💙", "✨", "🫠", "😭💙", "🥹💙"];
+
+const state = {
+  comments: {texts:[], topics:[], templates:[], openings:[]},
+  captions: {texts:[], topics:[], templates:[], openings:[]}
+};
+
+function randInt(max){
+  if(window.crypto && crypto.getRandomValues){
+    const a=new Uint32Array(1);
+    crypto.getRandomValues(a);
+    return a[0] % max;
+  }
+  return Math.floor(Math.random()*max);
+}
+function pick(arr){return arr[randInt(arr.length)];}
+function chance(p){return randInt(1000) < p*1000;}
+function wc(s){return String(s).trim().split(/\s+/).filter(Boolean).length;}
+function normalize(s){
+  return String(s||"").toLowerCase().replace(/[^a-z0-9\s]/g," ").replace(/\s+/g," ").trim();
+}
+function grams(s){
+  const w=normalize(s).split(" ").filter(Boolean), out=new Set();
+  for(let i=0;i<w.length-1;i++)out.add(w[i]+" "+w[i+1]);
+  return out;
+}
+function similarity(a,b){
+  const A=grams(a),B=grams(b);
+  if(!A.size||!B.size)return 0;
+  let n=0;A.forEach(x=>{if(B.has(x))n++;});
+  return n/(A.size+B.size-n);
+}
+function openingKey(s){return normalize(s).split(" ").slice(0,5).join(" ");}
+function storageKey(type){return "anyujin_fan_v62_"+type;}
+function history(type){
+  try{return JSON.parse(localStorage.getItem(storageKey(type))||"[]");}
+  catch(e){return [];}
+}
+function remember(type,text,topic,templateId){
+  const st=state[type];
+  st.texts.push(text);if(st.texts.length>70)st.texts.shift();
+  st.topics.push(topic);if(st.topics.length>9)st.topics.shift();
+  st.templates.push(templateId);if(st.templates.length>8)st.templates.shift();
+  st.openings.push(openingKey(text));if(st.openings.length>18)st.openings.shift();
+  let h=history(type);h.push(text);
+  if(h.length>320)h=h.slice(-240);
+  try{localStorage.setItem(storageKey(type),JSON.stringify(h));}catch(e){}
+}
+function chooseTopic(type){
+  const keys=Object.keys(topics), recent=state[type].topics.slice(-7);
+  let pool=keys.filter(k=>!recent.includes(k));
+  if(!pool.length)pool=keys;
+  return pick(pool);
+}
+function chooseTemplate(type){
+  const recent=state[type].templates.slice(-6);
+  let ids=templates.map((_,i)=>i).filter(i=>!recent.includes(i));
+  if(!ids.length)ids=templates.map((_,i)=>i);
+  return pick(ids);
+}
+function cleanText(s){
+  return s.replace(/\s+/g," ")
+    .replace(/\s+([,.;?!:])/g,"$1")
+    .replace(/^(okay|wait|guys|ngl|honestly|real question|real talk|be serious),?\s+/i, m=>m.toLowerCase())
+    .trim();
+}
+function maybeEmoji(text,type){
+  // Keep emoji occasional rather than adding one to every line.
+  // Comments slightly more likely than captions.
+  const p=type==="comments"?0.34:0.22;
+  return chance(p) ? text+" "+pick(emojis) : text;
+}
+function valid(text,type){
+  const n=wc(text.replace(/[^ -]+/g,""));
+  if(n<15||n>24)return false;
+  if(!/\bYujin\b/i.test(text)||!/\bLacoste\b/i.test(text))return false;
+  if(/\b(she|her)\b/i.test(text))return false;
+  if(type==="captions" && text.length+2+tags.length>275)return false;
+  return true;
+}
+function generate(type){
+  const old=history(type);
+  for(let tries=0;tries<1800;tries++){
+    const topic=chooseTopic(type), p=topics[topic], templateId=chooseTemplate(type);
+    let text=cleanText(templates[templateId]
+      .replace(/\{h\}/g,pick(p.hooks))
+      .replace(/\{s\}/g,pick(p.subjects))
+      .replace(/\{t\}/g,pick(p.thoughts))
+      .replace(/\{e\}/g,pick(p.extras))
+      .replace(/\{c\}/g,pick(p.closers)));
+    text=maybeEmoji(text,type);
+    if(!valid(text,type))continue;
+    if(old.includes(text))continue;
+    const op=openingKey(text);
+    if(state[type].openings.includes(op))continue;
+    if(state[type].texts.some(x=>similarity(text,x)>.24))continue;
+    if(old.slice(-90).some(x=>similarity(text,x)>.29))continue;
+    remember(type,text,topic,templateId);
+    return text;
+  }
+  try{localStorage.removeItem(storageKey(type));}catch(e){}
+  state[type]={texts:[],topics:[],templates:[],openings:[]};
+  return generate(type);
+}
+
+let type="comments";
+const output=document.getElementById("output");
+const modeLabel=document.getElementById("modeLabel");
+function randomize(){
+  const raw=generate(type);
+  output.textContent=type==="comments"?raw:raw+"\n\n"+tags;
+  modeLabel.textContent=type==="comments"?"Yujin Comments":"Yujin Captions";
+}
+document.querySelectorAll(".gen").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll(".gen").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+  type=btn.dataset.type;
+  randomize();
+}));
+async function copyText(text){
+  try{await navigator.clipboard.writeText(text);}
+  catch(e){const t=document.createElement("textarea");t.value=text;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove();}
+  const toast=document.getElementById("toast");
+  toast.classList.add("show");
+  setTimeout(()=>toast.classList.remove("show"),1000);
+}
+document.getElementById("copyBtn").addEventListener("click",()=>copyText(output.textContent));
+document.getElementById("storyCopyBtn").addEventListener("click",()=>copyText(document.getElementById("storyText").textContent));
+randomize();
+</script>
+</body>
+</html>
